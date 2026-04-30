@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apontamento de Produção</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body { font-family: sans-serif; background-color: #e9ecef; padding: 20px; display: flex; justify-content: center; }
+        .box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 350px; }
+        h2 { text-align: center; font-size: 1.1rem; color: #333; }
+        .campo { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; font-size: 0.85rem; color: #666; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .resultado-box { margin-top: 20px; padding: 15px; border-radius: 4px; text-align: center; font-weight: bold; }
+        .perda { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .dentro-meta { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        #valor { font-size: 2rem; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Cálculo de Perdas</h2>
+    
+    <div class="campo">
+        <label>Período (Minutos):</label>
+        <select id="meta">
+            <option value="430">SEG À SEX (430)</option>
+            <option value="330">SÁBADO (330)</option>
+        </select>
+    </div>
+
+    <div class="campo">
+        <label>Pçs / Hora:</label>
+        <input type="number" id="pcsHora" value="45">
+    </div>
+
+    <div class="campo">
+        <label>Total Produzido:</label>
+        <input type="number" id="totalProd" value="300">
+    </div>
+
+    <button onclick="calcular()">CALCULAR</button>
+
+    <div id="resBox" class="resultado-box" style="display:none;">
+        <span id="textoResultado">PERDA:</span>
+        <span id="valor">0</span>
+        <small>minutos</small>
+    </div>
+</div>
+
+<script>
+    function calcular() {
+        const meta = parseFloat(document.getElementById('meta').value);
+        const pcsHora = parseFloat(document.getElementById('pcsHora').value);
+        const total = parseFloat(document.getElementById('totalProd').value);
+        
+        // Fórmula exata da imagem: (60 / PçsHora * Total) - Meta
+        const tempoCalculado = (60 / pcsHora) * total;
+        const resultado = Math.round(tempoCalculado - meta);
+
+        const resBox = document.getElementById('resBox');
+        const valorDisplay = document.getElementById('valor');
+        const textoRes = document.getElementById('textoResultado');
+
+        valorDisplay.innerText = resultado;
+        resBox.style.display = 'block';
+
+        if (resultado < 0) {
+            resBox.className = 'resultado-box perda';
+            textoRes.innerText = "PERDA A SER APONTADA:";
+        } else {
+            resBox.className = 'resultado-box dentro-meta';
+            textoRes.innerText = "SALDO POSITIVO:";
+        }
+    }
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => navigator.serviceWorker.register('/calculo-de-producao/sw.js'));
+    }
+</script>
+
+</body>
+</html>
