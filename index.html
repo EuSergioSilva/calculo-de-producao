@@ -26,6 +26,87 @@
 
         /* Quadro de Exemplo igual à imagem */
         .quadro-exemplo { margin-top: 25px; border: 2px solid #000; width: 100%; max-width: 360px; background: #fff; padding: 15px; box-sizing: border-box; text-align: center; }
-        .titulo-exemplo { font-weight: bold; font-size: 1rem; border-bottom: 2px solid #000; padding-bottom: 5
+        .titulo-exemplo { font-weight: bold; font-size: 1rem; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px; display: block; }
+        .formula-exemplo { font-size: 1.2rem; font-weight: bold; color: #2e7d32; }
+    </style>
+</head>
+<body>
 
+    <div class="card">
+        <h1>AUTOKINITON</h1>
+        <h2>CÁLCULO DE PRODUÇÃO</h2>
 
+        <div class="campo">
+            <label>Período / Tempo:</label>
+            <select id="tempo">
+                <option value="430">SEG A SEX (430 MIN)</option>
+                <option value="330">SÁBADO (330 MIN)</option>
+                <option value="60">HORA/HORA</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Meta (Pçs/Hora):</label>
+            <input type="number" id="meta" placeholder="Ex: 45" inputmode="numeric">
+        </div>
+
+        <div class="campo">
+            <label>Total Produzido:</label>
+            <input type="number" id="prod" placeholder="Ex: 300" inputmode="numeric">
+        </div>
+
+        <button id="btn">Calcular Agora</button>
+
+        <div id="res">
+            <b id="status"></b>
+            <span id="valor" class="grande">0</span>
+            <small>MINUTOS</small><br>
+            <b id="info"></b>
+        </div>
+    </div>
+
+    <div class="quadro-exemplo">
+        <span class="titulo-exemplo">EXEMPLO</span>
+        <div class="formula-exemplo">
+            60 ÷ 45 x 300 - 430 = -30
+        </div>
+        <div style="font-size: 0.8rem; margin-top: 5px; font-weight: bold; color: #000;">PERDA A SER APONTADA</div>
+    </div>
+
+    <script>
+        // Sistema de cálculo blindado
+        document.getElementById('btn').addEventListener('click', function() {
+            const t = parseFloat(document.getElementById('tempo').value);
+            const m = parseFloat(document.getElementById('meta').value);
+            const p = parseFloat(document.getElementById('prod').value);
+            const display = document.getElementById('res');
+
+            if (m > 0 && !isNaN(p)) {
+                // Realiza o cálculo baseado na fórmula (60 / Meta) * Produção - Tempo
+                const resultado = Math.round(((60 / m) * p) - t);
+                const pecasDif = Math.round((resultado * m) / 60);
+                
+                display.style.display = 'block';
+                document.getElementById('valor').innerText = resultado > 0 ? '+' + resultado : resultado;
+                
+                // Define as cores e mensagens para saldo negativo (perda)
+                if (resultado < 0) {
+                    display.style.backgroundColor = '#ffebee';
+                    display.style.color = '#c62828';
+                    document.getElementById('status').innerText = 'TEMPO A SER APONTADO:';
+                    document.getElementById('info').innerText = '(' + Math.abs(pecasDif) + ' PEÇAS ABAIXO)';
+                } else {
+                    // Define as cores e mensagens para saldo positivo
+                    display.style.backgroundColor = '#e8f5e9';
+                    display.style.color = '#2e7d32';
+                    document.getElementById('status').innerText = 'SALDO POSITIVO:';
+                    document.getElementById('info').innerText = '(' + Math.abs(pecasDif) + ' PEÇAS ACIMA)';
+                }
+            } else {
+                alert('Preencha a Meta e a Produção!');
+            }
+        });
+    </script>
+
+</body>
+</html>
