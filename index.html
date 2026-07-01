@@ -3,32 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
     <title>Autokiniton App</title>
     <style>
-        body { font-family: sans-serif; background: #e5e5e5; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+        body { 
+            font-family: sans-serif; 
+            background: #e5e5e5; 
+            padding: 10px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
         
-        .card { background: white; padding: 20px; border-radius: 15px; width: 100%; max-width: 360px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); box-sizing: border-box; }
+        .card { 
+            background: #ffffff; 
+            padding: 20px; 
+            border-radius: 15px; 
+            width: 100%; 
+            max-width: 360px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+            box-sizing: border-box; 
+        }
         
-        h1 { text-align: center; color: #000; text-transform: uppercase; margin: 0 0 15px 0; font-weight: 900; border-bottom: 5px solid #a2ff00; padding-bottom: 8px; }
+        h1 { 
+            text-align: center; 
+            color: #000; 
+            text-transform: uppercase; 
+            margin: 0 0 15px 0; 
+            font-weight: 900; 
+            border-bottom: 5px solid #a2ff00; 
+            padding-bottom: 8px; 
+        }
         
-        /* Títulos Escuros e Centralizados */
-        h2 { font-size: 1rem; color: #000; text-transform: uppercase; margin: 15px 0; text-align: center; font-weight: 800; }
+        h2 { 
+            font-size: 1rem; 
+            color: #000; 
+            text-transform: uppercase; 
+            margin: 15px 0; 
+            text-align: center; 
+        }
         
-        .campo { margin-bottom: 15px; }
+        .campo { margin-bottom: 15px; width: 100%; }
         label { display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; color: #333; }
         
-        input, select { width: 100%; padding: 12px; border: 2px solid #aaa; border-radius: 8px; font-size: 1.1rem; box-sizing: border-box; background: #fff; }
+        input, select { 
+            width: 100%; 
+            padding: 12px; 
+            border: 2px solid #aaa; 
+            border-radius: 8px; 
+            font-size: 1.1rem; 
+            box-sizing: border-box; 
+            background: #fff; 
+            color: #000;
+        }
         
-        button { width: 100%; padding: 18px; background: #a2ff00; color: #000; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; font-size: 1.1rem; }
+        button { 
+            width: 100%; 
+            padding: 12px; 
+            background: #a2ff00; 
+            color: #000; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            font-size: 1.1rem; 
+            box-sizing: border-box;
+        }
         
-        #res { margin-top: 20px; padding: 20px; border-radius: 12px; text-align: center; display: none; }
-        .grande { font-size: 3.5rem; font-weight: 900; display: block; }
+        #res { 
+            margin-top: 20px; 
+            padding: 20px; 
+            border-radius: 12px; 
+            text-align: center; 
+            display: none; 
+        }
+        
+        .grande { font-size: 3rem; font-weight: 900; display: block; margin: 5px 0; }
+        .unidade { font-size: 1rem; font-weight: bold; display: block; text-transform: uppercase; }
 
-        /* Quadro de Exemplo igual à imagem */
-        .quadro-exemplo { margin-top: 25px; border: 2px solid #000; width: 100%; max-width: 360px; background: #fff; padding: 15px; box-sizing: border-box; text-align: center; }
-        .titulo-exemplo { font-weight: bold; font-size: 1rem; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px; display: block; }
-        .formula-exemplo { font-size: 1.2rem; font-weight: bold; color: #2e7d32; }
+        .quadro-exemplo { 
+            margin-top: 25px; 
+            border: 2px solid #000; 
+            width: 100%; 
+            max-width: 360px; 
+            background: #fff; 
+            padding: 15px; 
+            border-radius: 10px; 
+            box-sizing: border-box; 
+        }
+        
+        .titulo-exemplo { 
+            font-weight: 900; 
+            font-size: 0.9rem; 
+            text-align: center; 
+            display: block; 
+            margin-bottom: 10px; 
+            border-bottom: 1px solid #000; 
+            padding-bottom: 5px; 
+        }
+        
+        .formula-exemplo { 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            text-align: center; 
+            padding: 10px; 
+        }
+        
+        .legenda { 
+            font-size: 0.75rem; 
+            text-align: center; 
+            margin-top: 5px; 
+            font-weight: bold; 
+        }
     </style>
 </head>
 <body>
@@ -38,9 +124,11 @@
         <h2>CÁLCULO DE PRODUÇÃO</h2>
 
         <div class="campo">
-            <label>Período / Tempo:</label>
+            <label>Turno / Tempo:</label>
             <select id="tempo">
-                <option value="430">SEG A SEX (430 MIN)</option>
+                <option value="430">1º TURNO (430 MIN)</option>
+                <option value="425">2º TURNO (425 MIN)</option>
+                <option value="385">3º TURNO (385 MIN)</option>
                 <option value="330">SÁBADO (330 MIN)</option>
                 <option value="60">HORA/HORA</option>
             </select>
@@ -48,12 +136,12 @@
 
         <div class="campo">
             <label>Meta (Pçs/Hora):</label>
-            <input type="number" id="meta" placeholder="Ex: 45" inputmode="numeric">
+            <input type="number" id="meta" placeholder="Ex: 45">
         </div>
 
         <div class="campo">
             <label>Total Produzido:</label>
-            <input type="number" id="prod" placeholder="Ex: 300" inputmode="numeric">
+            <input type="number" id="prod" placeholder="Ex: 300">
         </div>
 
         <button id="btn">Calcular Agora</button>
@@ -61,21 +149,20 @@
         <div id="res">
             <b id="status"></b>
             <span id="valor" class="grande">0</span>
-            <small>MINUTOS</small><br>
-            <b id="info"></b>
+            <span class="unidade">Minutos</span>
+            <b id="info" style="display:block; margin-top:10px;"></b>
         </div>
     </div>
 
     <div class="quadro-exemplo">
-        <span class="titulo-exemplo">EXEMPLO</span>
+        <span class="titulo-exemplo">EXEMPLO DE CÁLCULO</span>
         <div class="formula-exemplo">
             60 ÷ 45 x 300 - 430 = -30
         </div>
-        <div style="font-size: 0.8rem; margin-top: 5px; font-weight: bold; color: #000;">PERDA A SER APONTADA</div>
+        <div class="legenda">PERDA A SER APONTADA</div>
     </div>
 
     <script>
-        // Sistema de cálculo blindado
         document.getElementById('btn').addEventListener('click', function() {
             const t = parseFloat(document.getElementById('tempo').value);
             const m = parseFloat(document.getElementById('meta').value);
@@ -83,21 +170,18 @@
             const display = document.getElementById('res');
 
             if (m > 0 && !isNaN(p)) {
-                // Realiza o cálculo baseado na fórmula (60 / Meta) * Produção - Tempo
                 const resultado = Math.round(((60 / m) * p) - t);
                 const pecasDif = Math.round((resultado * m) / 60);
                 
                 display.style.display = 'block';
                 document.getElementById('valor').innerText = resultado > 0 ? '+' + resultado : resultado;
                 
-                // Define as cores e mensagens para saldo negativo (perda)
                 if (resultado < 0) {
                     display.style.backgroundColor = '#ffebee';
                     display.style.color = '#c62828';
-                    document.getElementById('status').innerText = 'TEMPO A SER APONTADO:';
+                    document.getElementById('status').innerText = 'TEMPO A APONTAR:';
                     document.getElementById('info').innerText = '(' + Math.abs(pecasDif) + ' PEÇAS ABAIXO)';
                 } else {
-                    // Define as cores e mensagens para saldo positivo
                     display.style.backgroundColor = '#e8f5e9';
                     display.style.color = '#2e7d32';
                     document.getElementById('status').innerText = 'SALDO POSITIVO:';
@@ -108,6 +192,5 @@
             }
         });
     </script>
-
 </body>
 </html>
